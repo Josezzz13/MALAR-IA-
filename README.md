@@ -413,8 +413,8 @@ Los resultados dependen de:
 
 | Nombre | Código | Participación |
 |---|---|---|
-| Cristhian Reaño Ccoscco | 20201181 | 20% |
-| José Zapata Castro | 20211845 | 20% |
-| Isaac Huamani Sulca | 20215421 | 20% |
-| Sebastian Saco Alvarado | 20221648 | 20% |
-| Carlos Camilo Vásquez Morales | 20202583 | 20% |
+| Cristhian Reaño Ccoscco | 20201181 | 100% |
+| José Zapata Castro | 20211845 | 100% |
+| Isaac Huamani Sulca | 20215421 | 100% |
+| Sebastian Saco Alvarado | 20221648 | 100% |
+| Carlos Camilo Vásquez Morales | 20202583 | 100% |
