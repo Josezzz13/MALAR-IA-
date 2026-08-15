@@ -21,23 +21,15 @@ Uninfected
 
 El flujo general del proyecto es:
 
-text
-Dataset
-   ↓
-Carga y exploración
-   ↓
-Preprocesamiento
-   ↓
-División de los datos
-   ↓
-EfficientNet-B0
-   ↓
-Transfer Learning
-   ↓
-Fine-Tuning
-   ↓
-Evaluación
-   ↓
+
+Dataset ->
+Carga y exploración ->
+Preprocesamiento ->
+División de los datos ->
+EfficientNet-B0 ->
+Transfer Learning ->
+Fine-Tuning ->
+Evaluación ->
 Visualización de resultados
 
 
@@ -57,7 +49,7 @@ iarunava/cell-images-for-detecting-malaria
 
 El dataset contiene imágenes reales de células sanguíneas distribuidas en dos carpetas:
 
-text
+
 Parasitized/
 Uninfected/
 
@@ -80,7 +72,7 @@ Primero se importan las librerías necesarias para trabajar con:
 
 Las principales herramientas utilizadas son:
 
-text
+
 Python
 PyTorch
 Torchvision
@@ -106,7 +98,6 @@ Si CUDA está disponible, el entrenamiento se realiza utilizando la GPU.
 
 El programa también muestra:
 
-text
 Versión de PyTorch
 GPU disponible
 Memoria disponible
@@ -124,7 +115,7 @@ Por lo tanto, no es necesario descargar manualmente las imágenes antes de ejecu
 
 Una vez descargado, el programa busca automáticamente las carpetas:
 
-text
+
 Parasitized
 Uninfected
 
@@ -146,7 +137,6 @@ También se muestran varias imágenes reales utilizando *Matplotlib* para compro
 
 Por ejemplo:
 
-text
 Parasitized       Uninfected
 
 [imagen]          [imagen]
@@ -163,13 +153,13 @@ Antes de introducir las imágenes en la red neuronal se aplica un conjunto de tr
 
 Todas las imágenes son redimensionadas a:
 
-text
+
 128 × 128 píxeles
 
 
 Durante entrenamiento también se utilizan transformaciones como:
 
-text
+
 Horizontal Flip
 Vertical Flip
 Rotaciones
@@ -185,7 +175,7 @@ Finalmente, las imágenes son convertidas a tensores y normalizadas.
 
 El dataset se divide en tres grupos:
 
-text
+
 70 % → Entrenamiento
 15 % → Validación
 15 % → Prueba
@@ -211,7 +201,6 @@ La división se realiza manteniendo la proporción de las dos clases.
 
 Después de dividir el dataset se crean DataLoader para:
 
-text
 Train
 Validation
 Test
@@ -243,7 +232,6 @@ models.efficientnet_b0(
 
 La capa de clasificación original se sustituye por una nueva capa con dos salidas:
 
-text
 Parasitized
 Uninfected
 
@@ -262,7 +250,6 @@ Esta etapa permite aprovechar las características previamente aprendidas por Ef
 
 La primera fase se ejecuta durante:
 
-text
 35 épocas
 
 
@@ -276,13 +263,12 @@ En esta etapa se descongelan las últimas capas de EfficientNet-B0 para que pued
 
 Esta segunda fase se ejecuta durante:
 
-text
 15 épocas
 
 
 En total el modelo se entrena durante:
 
-text
+
 35 + 15 = 50 épocas
 
 
@@ -308,7 +294,7 @@ Después se evalúa el modelo sobre el conjunto de validación sin actualizar su
 
 Durante cada época se muestran resultados similares a:
 
-text
+
 Epoch 01/50
 Train Loss: ...
 Train Accuracy: ...
@@ -345,7 +331,6 @@ Cuando se obtiene una nueva mejor exactitud, el modelo se guarda automáticament
 
 El archivo generado es:
 
-text
 best_malaria_efficientnet_b0.pt
 
 
@@ -357,7 +342,6 @@ Al finalizar las 50 épocas se vuelve a cargar este modelo para realizar la eval
 
 Después del entrenamiento se generan gráficos con Matplotlib para mostrar:
 
-text
 Training Loss
 Validation Loss
 Training Accuracy
@@ -376,7 +360,6 @@ El mejor modelo se evalúa utilizando el conjunto de prueba.
 
 Se calculan diferentes métricas:
 
-text
 Accuracy
 Precision
 Recall
@@ -393,7 +376,6 @@ También se genera una matriz de confusión.
 
 Esta permite comparar:
 
-text
 Clase real
 vs.
 Clase predicha
@@ -413,9 +395,6 @@ La matriz se genera utilizando PyTorch y se visualiza mediante Matplotlib.
 
 El programa selecciona imágenes reales del conjunto de prueba y muestra:
 
-text
-Imagen
-
 Clase real: ...
 Predicción: ...
 Confianza: ...
@@ -433,11 +412,10 @@ Estos mapas permiten visualizar qué zonas de una imagen tuvieron mayor influenc
 
 El resultado se muestra de forma similar a:
 
-text
-Imagen original
-       ↓
-Predicción del modelo
-       ↓
+Imagen original ->
+
+Predicción del modelo ->
+       
 Mapa Grad-CAM
 
 
@@ -447,40 +425,40 @@ Grad-CAM se utiliza únicamente como herramienta de interpretación visual del c
 
 # Resumen del flujo implementado
 
-text
-Descarga del dataset
-        ↓
-Verificación de clases
-        ↓
-Visualización de imágenes
-        ↓
-Preprocesamiento
-        ↓
-Train / Validation / Test
-        ↓
-DataLoaders
-        ↓
-EfficientNet-B0 preentrenada
-        ↓
-Transfer Learning
-35 épocas
-        ↓
+
+Descarga del dataset ->
+        
+Verificación de clases ->
+        
+Visualización de imágenes ->
+        
+Preprocesamiento ->
+        
+Train / Validation / Test ->
+        
+DataLoaders ->
+        
+EfficientNet-B0 preentrenada ->
+        
+Transfer Learning 
+35 épocas ->
+        
 Fine-Tuning
-15 épocas
-        ↓
-Selección del mejor modelo
-        ↓
-Evaluación en Test
-        ↓
+15 épocas ->
+        
+Selección del mejor modelo ->
+        
+Evaluación en Test ->
+        
 Accuracy
 Precision
 Recall
-F1-score
-        ↓
-Matriz de confusión
-        ↓
-Predicciones visuales
-        ↓
+F1-score ->
+        
+Matriz de confusión  ->
+        
+Predicciones visuales ->
+      
 Grad-CAM
 
 
@@ -494,7 +472,7 @@ El proyecto está preparado para ejecutarse principalmente utilizando Google Col
 
 Se debe abrir el archivo:
 
-text
+
 malaria_efficientnet.ipynb
 
 
@@ -508,13 +486,13 @@ Antes de ejecutar el notebook se debe seleccionar una GPU.
 
 En Google Colab:
 
-text
-Entorno de ejecución
-        ↓
-Cambiar tipo de entorno de ejecución
-        ↓
-Acelerador de hardware
-        ↓
+
+Entorno de ejecución ->
+        
+Cambiar tipo de entorno de ejecución ->
+        
+Acelerador de hardware ->
+        
 T4 GPU
 
 
@@ -530,14 +508,14 @@ Ejecutar las celdas del notebook en orden.
 
 También puede utilizarse:
 
-text
+
 Entorno de ejecución
 → Ejecutar todo
 
 
 El código realizará automáticamente:
 
-text
+
 1. Instalación de KaggleHub
 2. Descarga del dataset
 3. Preparación de las imágenes
@@ -557,13 +535,13 @@ text
 
 El entrenamiento consta de:
 
-text
+
 50 épocas
 
 
 divididas en:
 
-text
+
 35 épocas de Transfer Learning
 15 épocas de Fine-Tuning
 
@@ -572,7 +550,7 @@ Durante la ejecución se muestra el progreso de cada época.
 
 Por ejemplo:
 
-text
+
 Epoch 01/50 | Train Acc: ... | Val Acc: ...
 Epoch 02/50 | Train Acc: ... | Val Acc: ...
 ...
@@ -585,7 +563,7 @@ Epoch 50/50 | Train Acc: ... | Val Acc: ...
 
 Al terminar se mostrarán:
 
-text
+
 Curvas de entrenamiento
 Métricas finales
 Matriz de confusión
@@ -596,7 +574,7 @@ Tiempo de ejecución
 
 También se genera el archivo con los mejores pesos:
 
-text
+
 best_malaria_efficientnet_b0.pt
 
 
@@ -606,7 +584,6 @@ best_malaria_efficientnet_b0.pt
 
 El entorno debe contar con:
 
-text
 Python 3
 PyTorch
 Torchvision
@@ -626,7 +603,6 @@ La dependencia adicional de KaggleHub se instala desde el propio notebook.
 
 Una estructura básica del repositorio puede ser:
 
-text
 MalarIA/
 │
 ├── README.md
@@ -661,7 +637,7 @@ Los resultados dependen de:
 
 # Tecnologías utilizadas
 
-text
+
 Python
 PyTorch
 Torchvision
