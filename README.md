@@ -415,6 +415,6 @@ Los resultados dependen de:
 |---|---|---|
 | Cristhian Reaño Ccoscco | 20201181 | 100% |
 | José Zapata Castro | 20211845 | 100% |
-| Isaac Huamani Sulca | 20215421 | 100% |
+| Isaac Anthony Huamani Sulca | 20215421 | 100% |
 | Sebastian Saco Alvarado | 20221648 | 100% |
 | Carlos Camilo Vásquez Morales | 20202583 | 100% |
