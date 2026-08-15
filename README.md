@@ -72,7 +72,7 @@ Uninfected/
 
 ## 🛠️ Pasos realizados
 
-### 1️⃣ Configuración del entorno
+### 1. Configuración del entorno
 
 Primero se importan las librerías necesarias para trabajar con imágenes, redes neuronales, GPU, visualización y descarga del dataset. Las principales herramientas utilizadas son:
 
@@ -88,7 +88,7 @@ Primero se importan las librerías necesarias para trabajar con imágenes, redes
 
 También se fija una semilla aleatoria para facilitar la reproducibilidad de los resultados.
 
-### 2️⃣ Verificación de GPU
+### 2. Verificación de GPU
 
 El código comprueba que Google Colab tenga una GPU disponible mediante CUDA:
 
@@ -98,11 +98,11 @@ torch.cuda.is_available()
 
 Si CUDA está disponible, el entrenamiento se realiza utilizando la GPU. El programa también muestra la versión de PyTorch, la GPU disponible y la memoria disponible. El uso de GPU permite reducir considerablemente el tiempo de entrenamiento.
 
-### 3️⃣ Descarga del dataset
+### 3. Descarga del dataset
 
 El dataset se descarga automáticamente desde Kaggle utilizando `kagglehub`, por lo que no es necesario descargarlo manualmente antes de ejecutar el proyecto. Una vez descargado, el programa busca automáticamente las carpetas `Parasitized` y `Uninfected`, y prepara una estructura compatible con `ImageFolder` de PyTorch.
 
-### 4️⃣ Exploración inicial de los datos
+### 4. Exploración inicial de los datos
 
 Después de cargar el dataset se verifica el número total de imágenes, las clases disponibles, la cantidad de imágenes por clase y la estructura del dataset. También se muestran varias imágenes reales utilizando Matplotlib para comprobar visualmente los datos:
 
@@ -114,7 +114,7 @@ Parasitized       Uninfected
 
 Esto permite comprobar que las imágenes se hayan cargado correctamente antes del entrenamiento.
 
-### 5️⃣ Preprocesamiento
+### 5. Preprocesamiento
 
 Antes de introducir las imágenes en la red neuronal se aplica un conjunto de transformaciones.
 
@@ -144,7 +144,7 @@ La justificación técnica es la ausencia de orientación canónica: a diferenci
 
 Finalmente, las imágenes son convertidas a tensores y normalizadas.
 
-### 6️⃣ División del dataset
+### 6. División del dataset
 
 El dataset se divide en tres grupos, manteniendo la proporción de las dos clases (división estratificada):
 
@@ -154,11 +154,11 @@ El dataset se divide en tres grupos, manteniendo la proporción de las dos clase
 | **Validación** | 15% | Se utiliza durante el entrenamiento para observar el comportamiento del modelo sobre imágenes que no se usan para actualizar sus pesos |
 | **Prueba** | 15% | Se utiliza únicamente al final para evaluar el rendimiento del modelo entrenado |
 
-### 7️⃣ Creación de DataLoaders
+### 7. Creación de DataLoaders
 
 Después de dividir el dataset se crean `DataLoader` para train, validation y test, que permiten procesar las imágenes por grupos o *batches*. El tamaño del batch se adapta a la memoria disponible de la GPU con el objetivo de aprovechar los recursos de Google Colab. También se vuelve a visualizar un batch de imágenes para comprobar que el preprocesamiento funciona correctamente.
 
-### 8️⃣ Carga del modelo
+### 8. Carga del modelo
 
 Para la clasificación se utiliza **EfficientNet-B0**, cargada con pesos previamente entrenados en ImageNet:
 
@@ -170,7 +170,7 @@ models.efficientnet_b0(
 
 La capa de clasificación original se sustituye por una nueva capa con dos salidas (`Parasitized` / `Uninfected`). De esta manera, EfficientNet-B0 se adapta al problema específico del proyecto.
 
-### 9️⃣ Transfer Learning
+### 9. Transfer Learning
 
 El entrenamiento se realiza utilizando **Transfer Learning**, en una estrategia de dos fases con bloques bien delimitados dentro de la arquitectura.
 
@@ -185,7 +185,7 @@ El bloque `classifier` (originalmente `Sequential(Dropout, Linear)` con salida a
 
 La primera fase se ejecuta durante **35 épocas**.
 
-### 🔟 Fine-Tuning
+### 10. Fine-Tuning
 
 Posteriormente se inicia una segunda fase de **Fine-Tuning**, en la que se descongela adicionalmente el bloque **`model.features[-2:]`**: los **últimos dos bloques MBConv** del extractor de características de EfficientNet-B0 (las etapas convolucionales más profundas, cercanas a la salida):
 
@@ -211,7 +211,7 @@ En total el modelo se entrena durante:
 35 + 15 = 50 épocas
 ```
 
-### 1️⃣1️⃣ Entrenamiento
+### 11. Entrenamiento
 
 Durante cada época se realizan dos procesos:
 
@@ -229,11 +229,11 @@ Validation Loss: ...
 Validation Accuracy: ...
 ```
 
-### 1️⃣2️⃣ Optimización del entrenamiento
+### 12. Optimización del entrenamiento
 
 Para reducir el tiempo de ejecución en GPU se utiliza **Mixed Precision**, que permite realizar determinadas operaciones con menor precisión numérica y aprovechar mejor la GPU. También se utilizan CUDA, `pin_memory`, DataLoader con múltiples *workers*, y un *batch size* adaptado a la GPU. Estas configuraciones buscan mantener el tiempo de entrenamiento dentro de un rango razonable para Google Colab.
 
-### 1️⃣3️⃣ Guardado del mejor modelo
+### 13. Guardado del mejor modelo
 
 Durante el entrenamiento se compara el resultado obtenido en el conjunto de validación. Cuando se obtiene una nueva mejor exactitud, el modelo se guarda automáticamente:
 
@@ -243,23 +243,23 @@ best_malaria_efficientnet_b0.pt
 
 Al finalizar las 50 épocas se vuelve a cargar este modelo para realizar la evaluación final.
 
-### 1️⃣4️⃣ Curvas de entrenamiento
+### 14. Curvas de entrenamiento
 
 Después del entrenamiento se generan gráficos con Matplotlib para mostrar Training/Validation Loss y Training/Validation Accuracy, permitiendo observar cómo cambia el desempeño del modelo a lo largo de las 50 épocas. También se indica gráficamente el momento en el que comienza el Fine-Tuning.
 
-### 1️⃣5️⃣ Evaluación
+### 15. Evaluación
 
 El mejor modelo se evalúa utilizando el conjunto de prueba, calculando **Accuracy**, **Precision**, **Recall** y **F1-score**. Estas métricas permiten analizar el desempeño del modelo desde diferentes perspectivas y no depender únicamente del porcentaje total de predicciones correctas.
 
-### 1️⃣6️⃣ Matriz de confusión
+### 16. Matriz de confusión
 
 También se genera una matriz de confusión que compara clase real vs. clase predicha, permitiendo observar clasificaciones correctas, falsos positivos y falsos negativos. La matriz se genera utilizando PyTorch y se visualiza mediante Matplotlib.
 
-### 1️⃣7️⃣ Visualización de predicciones
+### 17. Visualización de predicciones
 
 El programa selecciona imágenes reales del conjunto de prueba y muestra la clase real, la predicción y la confianza del modelo, permitiendo inspeccionar visualmente los resultados obtenidos.
 
-### 1️⃣8️⃣ Grad-CAM
+### 18. Grad-CAM
 
 Finalmente se utiliza **Grad-CAM** para generar mapas de calor sobre algunas imágenes, permitiendo visualizar qué zonas de una imagen tuvieron mayor influencia sobre la predicción realizada por EfficientNet-B0:
 
