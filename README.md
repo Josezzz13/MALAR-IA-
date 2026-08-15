@@ -411,10 +411,10 @@ Los resultados dependen de:
 
 ## 👥 Autores
 
-| Nombre | Código |
-|---|---|
-| Cristhian Reaño Ccoscco | 20201181 |
-| José Zapata Castro | 20211845 |
-| Isaac Huamani Sulca | 20215421 |
-| Sebastian Saco Alvarado | 20221648 |
-| Carlos Camilo Vásquez Morales | 20202583 |
+| Nombre | Código | Participación |
+|---|---|---|
+| Cristhian Reaño Ccoscco | 20201181 | 20% |
+| José Zapata Castro | 20211845 | 20% |
+| Isaac Huamani Sulca | 20215421 | 20% |
+| Sebastian Saco Alvarado | 20221648 | 20% |
+| Carlos Camilo Vásquez Morales | 20202583 | 20% |
