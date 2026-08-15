@@ -679,9 +679,7 @@ Google Colab
 
 ## Autores
 
-Agregar aquí los integrantes del grupo.
 
-text
 Cristhian Reaño Ccoscco - 20201181
 José Zapata Castro - 20211845
 Isaac Huamani Sulca - 20215421
